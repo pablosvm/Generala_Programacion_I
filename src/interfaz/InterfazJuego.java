@@ -1,16 +1,21 @@
 package interfaz;
+
+import juego.Dados;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class interfazJuego {
+public class InterfazJuego {
 
-    public interfazJuego() {
-        JFrame frame = new JFrame("Juego de la Generala");
+    private InterfazJugadores interfazJugadores;
+    private InterfazDados interfazDados;
+
+    public InterfazJuego() {
+        JFrame frame = new JFrame("G E N E R A L A");
         JPanel panel = new JPanel();
         frame.add(panel);
 
-        JLabel labelCantidadJugadores = new JLabel("Cantidad de jugadores:");
+        JLabel labelCantidadJugadores = new JLabel("Cuantos van a Jugar:");
         panel.add(labelCantidadJugadores);
 
         JTextField textFieldCantidadJugadores = new JTextField(10);
@@ -25,21 +30,16 @@ public class interfazJuego {
                 try {
                     int cantidadJugadores = Integer.parseInt(textFieldCantidadJugadores.getText());
                     if (cantidadJugadores < 2 || cantidadJugadores > 5) {
-                        JOptionPane.showMessageDialog(null, "La cantidad de jugadores debe estar entre 2 y 5.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "La cantidad de jugadores debe ser entre 2 y 5.", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        String[] jugadores = new String[cantidadJugadores];
 
-                        for (int i = 0; i < cantidadJugadores; i++) {
-                            String nombre = JOptionPane.showInputDialog("Nombre del Jugador " + (i + 1));
-                            jugadores[i] = nombre;
-                        }
+                        interfazJugadores = new InterfazJugadores();
 
-                        String mensaje = "Jugadores creados:\n";
-                        for (String jugador : jugadores) {
-                            mensaje += jugador + "\n";
-                        }
+                        interfazDados = new InterfazDados(new Dados());
 
-                        JOptionPane.showMessageDialog(null, mensaje, "Jugadores Creados", JOptionPane.INFORMATION_MESSAGE);
+                        // Agregar lógica de tablero
+
+                        frame.dispose();// Cierra la ventana actual
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Ingrese un número entre 2 y 5 jugadores.", "Error", JOptionPane.ERROR_MESSAGE);
